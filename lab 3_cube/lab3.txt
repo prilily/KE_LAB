@@ -1,0 +1,58 @@
+# cuboids then computing cubes by union all etc
+
+create table emp (eid int(20) PRIMARY KEY, ename varchar(50), dept varchar(50), desig varchar(30), salary int(20));
+insert into emp values(1,'riya','CSE','ASSOC_Prof',30000)
+insert into emp values(1,'riya','CSE','ASSOC_Prof',30000)
+insert into emp values(1,'riya','CSE','ASSOC_Prof',30000)
+insert into emp values(1,'riya','CSE','ASSOC_Prof',30000)
+insert into emp values(1,'riya','CSE','ASSOC_Prof',30000)
+insert into emp values(1,'riya','CSE','ASSOC_Prof',30000)
+insert into emp values(1,'riya','CSE','ASSOC_Prof',30000)
+insert into emp values(1,'riya','CSE','ASSOC_Prof',30000)
+insert into emp values(1,'riya','CSE','ASSOC_Prof',30000)
+insert into emp values(1,'riya','CSE','ASSOC_Prof',30000)
+
+1D
+select dept, avg(salary) from emp group by dept
+
+2D
+select dept,desig, avg(salary) from emp group by dept,desig
+
+3D
+
+select ename,dept,desig, avg(salary) from emp group by ename,dept,desig
+
+4D
+select eid,ename,dept,desig, avg(salary) from emp group by eid,ename,dept,desig
+
+
+#now do union for CUBE
+select dept,desig, avg(salary) from emp group by dept,desig
+union all
+select dept,"" avg(salary) from emp group by dept
+
+
+select ename,dept,desig, avg(salary) from emp group by ename,dept,desig
+union all
+select " ",dept,desig, avg(salary) from emp group by dept,desig
+
+select eid,ename,dept,desig, avg(salary) from emp group by eid,ename,dept,desig
+union all
+select " ",ename,dept,desig, avg(salary) from emp group by ename,dept,desig
+
+
+select to_char(eid) eid,ename,dept,design, avg(salary) Average_Salary from employees group by eid,ename,dept,design union all
+select ' ',ename,dept,design, avg(salary) Average_Salary from employees group by ename,dept,design union all
+select ' ',' ',dept,design, avg(salary) Average_Salary from employees group by dept,design union all
+select ' ',' ',' ',design, avg(salary) Average_Salary from employees group by design;
+
+
+# closed CUBE
+select dept,design, avg(salary) from emp group by cube(dept,desig) order by 1,2;
+
+#ICE BERG CUBE
+select dept,design, avg(salary) from emp group by dept,desig having avg(salary)>=30000;
+
+
+
+
