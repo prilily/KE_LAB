@@ -1,0 +1,85 @@
+CREATE TABLE student  
+( SID number(10) NOT NULL,  
+  SNAME varchar2(50) NOT NULL,  
+  BATCH varchar2(10),
+  GRADE varchar2(2),
+  STIPEND number(10)
+);  
+
+INSERT INTO student
+( SID, SNAME, BATCH, GRADE, STIPEND)  
+VALUES  
+( 411968, 'Rahul', '19-23', 'EX', 8000);
+INSERT INTO student
+( SID, SNAME, BATCH, GRADE, STIPEND)  
+VALUES  
+( 411972, 'Madhu', '19-23', 'A', 4000);
+INSERT INTO student
+( SID, SNAME, BATCH, GRADE, STIPEND)  
+VALUES  
+( 411927, 'Hima', '19-23', 'EX', 7500);
+INSERT INTO student
+( SID, SNAME, BATCH, GRADE, STIPEND)  
+VALUES  
+( 411837, 'Ramesh', '18-22', 'B', 3500);
+INSERT INTO student
+( SID, SNAME, BATCH, GRADE, STIPEND)  
+VALUES  
+( 611822, 'Mahesh', '18-22', 'C', 1500);
+INSERT INTO student
+( SID, SNAME, BATCH, GRADE, STIPEND)  
+VALUES  
+( 611722, 'Suresh', '17-21', 'EX', 10000);
+INSERT INTO student
+( SID, SNAME, BATCH, GRADE, STIPEND)  
+VALUES  
+( 511982, 'Mithilesh', '18-22', 'A', 6000);
+INSERT INTO student
+( SID, SNAME, BATCH, GRADE, STIPEND)  
+VALUES  
+( 211956, 'Raheem', '19-23', 'B', 6000);
+INSERT INTO student
+( SID, SNAME, BATCH, GRADE, STIPEND)  
+VALUES  
+( 311802, 'Rahil', '18-22', 'C', 4000);
+INSERT INTO student
+( SID, SNAME, BATCH, GRADE, STIPEND)  
+VALUES  
+( 711702, 'Raju', '17-21', 'A', 7000);
+INSERT INTO student
+( SID, SNAME, BATCH, GRADE, STIPEND)  
+VALUES  
+( 611777, 'Rajesh', '17-21', 'EX', 9000); 
+INSERT INTO student
+( SID, SNAME, BATCH, GRADE, STIPEND)  
+VALUES  
+( 3112047, 'Helen', '20-24', 'B', 6000);
+INSERT INTO student
+( SID, SNAME, BATCH, GRADE, STIPEND)  
+VALUES  
+( 8112039, 'Sushma', '20-24', 'B', 7000);
+INSERT INTO student
+( SID, SNAME, BATCH, GRADE, STIPEND)  
+VALUES  
+( 2112039, 'Reethika', '20-24', 'C', 3000);
+INSERT INTO student
+( SID, SNAME, BATCH, GRADE, STIPEND)  
+VALUES  
+( 211739, 'Reethu', '17-21', 'C', 4500);
+
+select BATCH,sum(STIPEND) from student group by BATCH order by BATCH asc;
+
+select BATCH,sum(STIPEND) from student group by rollup(BATCH) order by BATCH asc;
+
+select BATCH,sum(STIPEND) from student group by cube(BATCH) order by BATCH asc;
+
+select BATCH,GRADE,sum(STIPEND) from student group by rollup(BATCH,GRADE) order by 1,2;
+
+select BATCH,GRADE,sum(STIPEND) from student group by cube(BATCH,GRADE) order by 1,2;
+
+select BATCH,GRADE,sum(STIPEND),case grouping_id(BATCH,GRADE) 
+    when 1 then 'Batch Sub Total'
+    when 2 then 'Grade Sub Total'
+    when 3 then 'Grand Total'
+    end as Total from student group by cube(BATCH,GRADE) order by 1,2;
+  
