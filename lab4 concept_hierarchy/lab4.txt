@@ -1,0 +1,1 @@
+select d1*, denser_rank over (partition d2.head order by d1.id) as Rank_Number from dept d1, left outer join dept d2 on d1.head=d2.head
